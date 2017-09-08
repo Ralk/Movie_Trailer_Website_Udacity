@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Movie Trailers!</title>
+
+    <!-- Bootstrap 3 -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <style type="text/css" media="screen">
+        body {
+            padding-top: 80px;
+        }
+        #trailer .modal-dialog {
+            margin-top: 200px;
+            width: 640px;
+            height: 480px;
+        }
+        .hanging-close {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            z-index: 9001;
+        }
+        #trailer-video {
+            width: 100%;
+            height: 100%;
+        }
+        .movie-tile {
+            margin-bottom: 20px;
+        }
+        .movie-tile:hover {
+            background-color: #EEE;
+            cursor: pointer;
+        }
+        .scale-media {
+            padding-bottom: 56.25%;
+            position: relative;
+        }
+        .scale-media iframe {
+            border: none;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            background-color: white;
+        }
+        .video-card {
+          overflow: hidden;
+          width: 350px;
+          height: 600px;
+          margin-bottom: 50px;
+          border-radius: 10px;
+          background-color: #fff;
+          box-shadow: 0 4px 21px -12px rgba(0, 0, 0, .66);
+          transform: rotate(0deg);
+          transition: all 200ms ease;
+          font-size: 18px;
+          cursor: pointer;
+        }
+        .movie_title {
+         font-weight: bold;
+        }
+        .video-card:hover {
+          box-shadow: 0 34px 32px -33px rgba(0, 0, 0, .18);
+          transform: translate(0px, -3px);
+        }
+        .video-bar {
+          width: 4px;
+          height: 100%;
+          float: left;
+        }
+        .video-bar.color-blue {
+          background-color: #39606d;
+        }
+        .video-post-text {
+          margin-top: 19px;
+          margin-right: 20px;
+          margin-left: 20px;
+          font-size: 17px;
+          text-transform: uppercase;
+        }
+        .video-duration {
+            font-size: 10px;
+            background-color: #2a7375;
+            border-radius: 3px;
+            height: 16px;
+            vertical-align: middle;
+            border: 2px dashed cadetblue;
+            width: 37%;
+            text-align: center;
+            font-style: italic;
+            color: white;
+        }
+        .video-description {
+          font-size: 13px;
+          text-transform: none;
+        }
+        .section-title {
+          color: #2F4C56;
+          font-size: 26px;
+          font-weight: 400;
+          text-align: center;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          margin-bottom: 20px;
+        }
+        .title-underline {
+          display: block;
+          width: 50%;
+          height: 2px;
+          margin-right: auto;
+          margin-left: auto;
+          background-color: #23b9b6;
+          margin-top: -20px;
+        }
+        .video-section {
+          padding-bottom: 80px;
+          background-color: #f7f7f7;
+        }
+        .video-flex {
+          display: flex;
+          margin-top: 20px;
+          justify-content: space-around;
+          flex-wrap: wrap;
+          align-items: flex-end;
+        }
+        @media (max-width: 991px) {
+          .video-card {
+            flex: 0 auto;
+          }
+        }
+    </style>
+    <script type="text/javascript" charset="utf-8">
+        // Pause the video when the modal is closed
+        $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
+            // Remove the src so the player itself gets removed, as this is the only
+            // reliable way to ensure the video stops playing in IE
+            $("#trailer-video-container").empty();
+        });
+        // Start playing the video whenever the trailer modal is opened
+        $(document).on('click', '.movie-tile', function (event) {
+            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+            var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+            $("#trailer-video-container").empty().append($("<iframe></iframe>", {
+              'id': 'trailer-video',
+              'type': 'text-html',
+              'src': sourceUrl,
+              'frameborder': 0
+            }));
+        });
+        // Animate in the movies when the page loads
+        $(document).ready(function () {
+          $('.movie-tile').hide().first().show("fast", function showNext() {
+            $(this).next("div").show("fast", showNext);
+          });
+        });
+    </script>
+</head>
+
+  <body>
+    <!-- Trailer Video Modal -->
+    <div class="modal" id="trailer">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
+            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+          </a>
+          <div class="scale-media" id="trailer-video-container">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Page Content -->
+    <div class="container">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Movie Trailers</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+        <h1 class="section-title">The Lord of the Ring Movie Trailers</h1>
+        <div class="title-underline"></div>
+    </div>
+    <div class="container">
+    <div class="video-section">
+        <div class="w-container promotion-container">
+          <div class="video-flex">
+            
+<div data-ix="video-card" class="w-clearfix w-preserve-3d video-card movie-tile" data-trailer-youtube-id="V75dMMIW2B4" data-toggle="modal" data-target="#trailer">
+<img width="100%" height="70%" src="https://upload.wikimedia.org/wikipedia/en/9/9d/The_Lord_of_the_Rings_The_Fellowship_of_the_Ring_%282001%29_theatrical_poster.jpg" >
+  <div class="video-bar color-blue"></div>
+  <div class="video-post-text">
+    <div class="movie_title">The Lord of the Rings: The Fellowship of the Ring</div>
+    <h5 class="video-duration">Duration: 2h 24min</h5>
+    <div class="video-description color-blue">A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle Earth from the Dark Lord Sauron.</div>
+  </div>
+</div>
+
+<div data-ix="video-card" class="w-clearfix w-preserve-3d video-card movie-tile" data-trailer-youtube-id="LbfMDwc4azU" data-toggle="modal" data-target="#trailer">
+<img width="100%" height="70%" src="https://upload.wikimedia.org/wikipedia/en/a/ad/Lord_of_the_Rings_-_The_Two_Towers.jpg" >
+  <div class="video-bar color-blue"></div>
+  <div class="video-post-text">
+    <div class="movie_title">The Lord of the Rings: The Two Towers</div>
+    <h5 class="video-duration">Duration: 2h 30min</h5>
+    <div class="video-description color-blue">While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman, and his hordes of Isengard.</div>
+  </div>
+</div>
+
+<div data-ix="video-card" class="w-clearfix w-preserve-3d video-card movie-tile" data-trailer-youtube-id="r5X-hFf6Bwo" data-toggle="modal" data-target="#trailer">
+<img width="100%" height="70%" src="https://upload.wikimedia.org/wikipedia/en/9/9d/Lord_of_the_Rings_-_The_Return_of_the_King.jpg" >
+  <div class="video-bar color-blue"></div>
+  <div class="video-post-text">
+    <div class="movie_title">The Lord of the Rings: The Return of the King</div>
+    <h5 class="video-duration">Duration: 2h 15min</h5>
+    <div class="video-description color-blue">Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.</div>
+  </div>
+</div>
+
+<div data-ix="video-card" class="w-clearfix w-preserve-3d video-card movie-tile" data-trailer-youtube-id="SDnYMbYB-nU" data-toggle="modal" data-target="#trailer">
+<img width="100%" height="70%" src="https://upload.wikimedia.org/wikipedia/en/b/b3/The_Hobbit-_An_Unexpected_Journey.jpeg" >
+  <div class="video-bar color-blue"></div>
+  <div class="video-post-text">
+    <div class="movie_title">An Unexpected Journey</div>
+    <h5 class="video-duration">Duration: 3h</h5>
+    <div class="video-description color-blue"> A reluctant hobbit, Bilbo Baggins, sets out to the Lonely Mountain with a spirited group of dwarves to reclaim their mountain home, and the gold within it from the dragon Smaug.</div>
+  </div>
+</div>
+
+<div data-ix="video-card" class="w-clearfix w-preserve-3d video-card movie-tile" data-trailer-youtube-id="fnaojlfdUbs" data-toggle="modal" data-target="#trailer">
+<img width="100%" height="70%" src="https://upload.wikimedia.org/wikipedia/en/4/4f/The_Hobbit_-_The_Desolation_of_Smaug_theatrical_poster.jpg" >
+  <div class="video-bar color-blue"></div>
+  <div class="video-post-text">
+    <div class="movie_title">The Desolation of Smaug</div>
+    <h5 class="video-duration">Duration: 2h 40min</h5>
+    <div class="video-description color-blue">The dwarves, along with Bilbo Baggins and Gandalf the Grey, continue their quest to reclaim Erebor, their homeland, from Smaug. Bilbo Baggins is in possession of a mysterious and magical ring.</div>
+  </div>
+</div>
+
+<div data-ix="video-card" class="w-clearfix w-preserve-3d video-card movie-tile" data-trailer-youtube-id="iVAgTiBrrDA" data-toggle="modal" data-target="#trailer">
+<img width="100%" height="70%" src="https://upload.wikimedia.org/wikipedia/en/0/0e/The_Hobbit_-_The_Battle_of_the_Five_Armies.jpg" >
+  <div class="video-bar color-blue"></div>
+  <div class="video-post-text">
+    <div class="movie_title">The Battle of the Five Armies</div>
+    <h5 class="video-duration">Duration: 2h 12min</h5>
+    <div class="video-description color-blue">Bilbo and Company are forced to engage in a war against an array of combatants and keep the Lonely Mountain from falling into the hands of a rising darkness.</div>
+  </div>
+</div>
+
+          </div>
+        </div>
+    </div>
+    </div>
+
+  </body>
+</html>
