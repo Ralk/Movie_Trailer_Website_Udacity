@@ -126,7 +126,6 @@ main_page_head = '''
         }
         .video-section {
           padding-bottom: 80px;
-          background-color: #f7f7f7;
         }
         .video-flex {
           display: flex;
@@ -187,29 +186,19 @@ main_page_content = '''
     </div>
 
     <!-- Main Page Content -->
-    <div class="container">
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">Movie Trailers</a>
-          </div>
-        </div>
-      </div>
-    </div>
     <div>
         <h1 class="section-title">The Lord of the Ring Movie Trailers</h1>
         <div class="title-underline"></div>
     </div>
     <div class="container">
-    <div class="video-section">
-        <div class="w-container promotion-container">
-          <div class="video-flex">
-            {movie_tiles}
-          </div>
+        <div class="video-section">
+            <div class="w-container promotion-container">
+              <div class="video-flex">
+                {movie_tiles}
+              </div>
+            </div>
         </div>
     </div>
-    </div>
-
   </body>
 </html>
 '''
